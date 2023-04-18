@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Scanner;
 
 public class Player {
     //This is an int to keep it consistent with the Othello game board.
@@ -67,9 +69,33 @@ public class Player {
      * @param og - The current state of the game-board
      * @return - The tuple of integers for this player's next move.
      */
-    public int[] minMax(OthelloGame og) {
+    public int[] miniMax(OthelloGame og) {
         ArrayList<int[]> possibles = this.findMoves(og);
         //This is the part that will take some doing.
         return null;
     }
+
+    /**
+     * Asks the user to input the next play for that player
+     *
+     * @param og The othello board to interact with
+     * @return an array with 2 entries [x,y] mapping to the plays they want to make
+     */
+    public int[] humanInput(OthelloGame og){
+        while(true) {
+            try {
+                Scanner scn = new Scanner(System.in);
+                System.out.println(Arrays.deepToString(og.board));
+                System.out.println("what's your move? in the form x,y");
+                System.out.print(": ");
+                String[] strSplit = scn.nextLine().split(",");
+                return new int[]{Integer.parseInt(strSplit[0]), Integer.parseInt(strSplit[1])};
+            }
+            catch(Exception e){
+                System.out.println("Invalid Play, Try again");
+            }
+        }
+    }
+
+
 }

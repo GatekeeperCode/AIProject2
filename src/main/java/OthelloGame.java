@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OthelloGame {
 
@@ -152,7 +153,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(board.toString()); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
         }
         else if(oneScore>twoScore)
         {
@@ -160,7 +161,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(board.toString()); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
         }
         else
         {
@@ -168,7 +169,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(board.toString()); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
         }
 
         System.exit(0);
@@ -229,6 +230,10 @@ public class OthelloGame {
             {
                 tempY = yPos+j;
                 tempX = xPos+i;
+//                if(tempX < 0 || tempY < 0 || tempY >7 || tempX > 7){
+//                    continue;
+//                }
+
                 boolean clearPlay = true;
                 boolean opPiecePresent = false;
 
