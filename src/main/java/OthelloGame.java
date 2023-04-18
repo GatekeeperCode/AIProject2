@@ -218,7 +218,7 @@ public class OthelloGame {
      * @param yPos Y Position of play location
      * @return True if you can play, false otherwise
      */
-    private boolean viablePlay(int xPos, int yPos)
+    boolean viablePlay(int xPos, int yPos)
     {
         int tempX = xPos;
         int tempY = yPos;
