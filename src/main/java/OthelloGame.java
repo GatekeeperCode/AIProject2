@@ -1,35 +1,24 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OthelloGame {
+    /**
+     * Keeps Track of:
+     * Curret Player
+     */
 
-    int[][] board;
+    //int[][] board;
     int player;
+    OthelloBoard brd;
 
 
     public OthelloGame() {
         player = 1;
-
-        board = new int[][]
-                {       {0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 2, 1, 0, 0, 0},
-                        {0, 0, 0, 1, 2, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0},
-                        {0, 0, 0, 0, 0, 0, 0, 0}};
+        brd = new OthelloBoard();
     }
 
-    public OthelloGame(int[][] oldBoard, int oldPlayer)
+    public OthelloGame(OthelloBoard oldBoard, int oldPlayer)
     {
-        for(int i=0; i<oldBoard.length; i++)
-        {
-            for(int j=0; j<oldBoard[i].length; j++)
-            {
-                board[i][j] = oldBoard[i][j];
-            }
-        }
+        brd = new OthelloBoard(oldBoard.board, oldBoard.curr1Score,oldBoard.curr2Score);
 
         player = oldPlayer;
     }
@@ -40,94 +29,113 @@ public class OthelloGame {
      * @param yPos Y position of placed piece
      * @return True if play followed through, false if play spot was invalid.
      */
-    boolean play(int xPos, int yPos)
+//    boolean play(int xPos, int yPos)
+//    {
+//        if(!viablePlay(xPos, yPos))
+//        {
+//            return false;
+//        }
+//
+//        board[xPos][yPos] = player;
+//
+//        for(int i=-1; i<2; i++)
+//        {
+//            for(int j=-1; j<2; j++)
+//            {
+//                int tempY = yPos + j;
+//                int tempX = xPos + i;
+//
+//                if(board[tempX][tempY] != 0 && board[tempX][tempY] != player)
+//                {
+//                    boolean foundFlip = false;
+//
+//                    while(tempX< board.length && tempY< board.length)
+//                    {
+//                        int opponet = 2;
+//                        if(player==2)
+//                        {
+//                            opponet=1;
+//                        }
+//
+//                        if(board[tempX][tempY]==opponet)
+//                        {
+//                            tempX += i;
+//                            tempY += j;
+//                        }
+//                        else if(board[tempX][tempY]==player)
+//                        {
+//                            tempX -= i;
+//                            tempY -= j;
+//                            foundFlip = true;
+//                            break;
+//                        }
+//                    }
+//
+//                    if(foundFlip)
+//                    {
+//                        int opponet = 2;
+//                        if(player==2)
+//                        {
+//                            opponet=1;
+//                        }
+//
+//                        while(board[tempX][tempY]!=player)
+//                        {
+//                            board[tempX][tempY]=opponet;
+//                            tempX-=i;
+//                            tempY-=j;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        if(gameEndCheck())
+//        {
+//            scoreGame();
+//        }
+//
+//        System.out.println("Player " + player + "'s turn");
+//        System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
+//
+//        return true;
+//    }
+
+    void makePlay(int xPos, int yPos)
     {
-        if(!viablePlay(xPos, yPos))
+        if(brd.viablePlay(xPos,yPos, player))
         {
-            return false;
-        }
+            brd.play(xPos, yPos, player);
 
-        board[xPos][yPos] = player;
-
-        for(int i=-1; i<2; i++)
-        {
-            for(int j=-1; j<2; j++)
+            if(player==1)
             {
-                int tempY = yPos + j;
-                int tempX = xPos + i;
+                player = 2;
+            }
+            else
+            {
+                player=1;
+            }
 
-                if(board[tempX][tempY] != 0 && board[tempX][tempY] != player)
-                {
-                    boolean foundFlip = false;
-
-                    while(tempX< board.length && tempY< board.length)
-                    {
-                        int opponet = 2;
-                        if(player==2)
-                        {
-                            opponet=1;
-                        }
-
-                        if(board[tempX][tempY]==opponet)
-                        {
-                            tempX += i;
-                            tempY += j;
-                        }
-                        else if(board[tempX][tempY]==player)
-                        {
-                            tempX -= i;
-                            tempY -= j;
-                            foundFlip = true;
-                            break;
-                        }
-                    }
-
-                    if(foundFlip)
-                    {
-                        int opponet = 2;
-                        if(player==2)
-                        {
-                            opponet=1;
-                        }
-
-                        while(board[tempX][tempY]!=player)
-                        {
-                            board[tempX][tempY]=opponet;
-                            tempX-=i;
-                            tempY-=j;
-                        }
-                    }
-                }
+            if(!gameEndCheck())
+            {
+                scoreFinalGame();
             }
         }
-
-        if(gameEndCheck())
+        else
         {
-            scoreGame();
+            System.out.println("Play location was invalid, please choose another spot.");
         }
-
-        System.out.println("Player " + player + "'s turn");
-        System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
-
-        return true;
     }
+
 
     /**
      * Scores and Exits the game upon completion
      */
-    void scoreGame()
+    void scoreFinalGame()
     {
-        int oneScore = 0;
-        int twoScore = 0;
-
-        for(int i=0; i< board.length; i++)
-        {
-            for(int j=0; j<board[i].length; j++)
-            {
-                if(board[i][j]==1) {oneScore++;}
-                if(board[i][j]==2) {twoScore++;}
-            }
-        }
+        brd.scoreGame();
+        int oneScore = brd.curr1Score;
+        int twoScore = brd.curr2Score;
 
         if(twoScore>oneScore)
         {
@@ -135,7 +143,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
         }
         else if(oneScore>twoScore)
         {
@@ -143,7 +151,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
         }
         else
         {
@@ -151,7 +159,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
+            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
         }
 
         System.exit(0);
@@ -174,13 +182,13 @@ public class OthelloGame {
             player=1;
         }
 
-        for(int i=0; i<board.length; i++)
+        for(int i=0; i<brd.board.length; i++)
         {
-            for(int j=0; j<board[i].length; j++)
+            for(int j=0; j<brd.board[i].length; j++)
             {
-                if(board[i][j]==0)
+                if(brd.board[i][j]==0)
                 {
-                    if(!ablePlay && viablePlay(i,j))
+                    if(!ablePlay && brd.viablePlay(i,j,player))
                     {
                         ablePlay=true;
                     }
@@ -188,68 +196,11 @@ public class OthelloGame {
             }
         }
 
-        if(ablePlay)
+        if(!ablePlay)
         {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Checks if move is valid
-     * @param xPos X position of play location
-     * @param yPos Y Position of play location
-     * @return True if you can play, false otherwise
-     */
-    boolean viablePlay(int xPos, int yPos)
-    {
-        int tempX = xPos;
-        int tempY = yPos;
-
-        for(int i=-1; i<2; i++)
-        {
-            for(int j=-1; j<2; j++)
-            {
-                tempY = yPos+j;
-                tempX = xPos+i;
-//                if(tempX < 0 || tempY < 0 || tempY >7 || tempX > 7){
-//                    continue;
-//                }
-
-                boolean clearPlay = true;
-                boolean opPiecePresent = false;
-
-                if(i==0 && j==0)
-                {
-                    clearPlay=false;
-                }
-
-                while(clearPlay)
-                {
-                    int opponet = 2;
-                    if(player==2)
-                    {
-                        opponet=1;
-                    }
-
-                    if(!opPiecePresent && board[tempX][tempY]==opponet)
-                    {
-                        tempX+=i;
-                        tempY+=j;
-                        opPiecePresent = true;
-                    }
-                    else if(opPiecePresent && board[tempX][tempY]==player)
-                    {
-                        return true;
-                    }
-                    else if(board[tempX][tempY]==0)
-                    {
-                        clearPlay = false;
-                    }
-                }
-            }
+            scoreFinalGame();
         }
 
-        return false;
+        return ablePlay;
     }
 }
