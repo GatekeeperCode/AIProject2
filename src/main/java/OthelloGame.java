@@ -62,57 +62,39 @@ public class OthelloGame {
 
                     while(tempX< board.length && tempY< board.length)
                     {
-                        if(player==1)
+                        int opponet = 2;
+                        if(player==2)
                         {
-                            if(board[tempX][tempY]==2)
-                            {
-                                tempX += i;
-                                tempY += j;
-                            }
-                            else if(board[tempX][tempY]==1)
-                            {
-                                tempX -= i;
-                                tempY -= j;
-                                foundFlip = true;
-                                break;
-                            }
+                            opponet=1;
                         }
-                        else
+
+                        if(board[tempX][tempY]==opponet)
                         {
-                            if(board[tempX][tempY]==1)
-                            {
-                                tempX += i;
-                                tempY += j;
-                            }
-                            else if(board[tempX][tempY]==2)
-                            {
-                                tempX -= i;
-                                tempY -= j;
-                                foundFlip = true;
-                                break;
-                            }
+                            tempX += i;
+                            tempY += j;
+                        }
+                        else if(board[tempX][tempY]==player)
+                        {
+                            tempX -= i;
+                            tempY -= j;
+                            foundFlip = true;
+                            break;
                         }
                     }
 
                     if(foundFlip)
                     {
-                        if(player==1)
+                        int opponet = 2;
+                        if(player==2)
                         {
-                            while(board[tempX][tempY]!=player)
-                            {
-                                board[tempX][tempY]=2;
-                                tempX-=i;
-                                tempY-=j;
-                            }
+                            opponet=1;
                         }
-                        else
+
+                        while(board[tempX][tempY]!=player)
                         {
-                            while(board[tempX][tempY]!=player)
-                            {
-                                board[tempX][tempY]=1;
-                                tempX-=i;
-                                tempY-=j;
-                            }
+                            board[tempX][tempY]=opponet;
+                            tempX-=i;
+                            tempY-=j;
                         }
                     }
                 }
@@ -244,39 +226,25 @@ public class OthelloGame {
 
                 while(clearPlay)
                 {
-                    if(player==1)
+                    int opponet = 2;
+                    if(player==2)
                     {
-                        if(!opPiecePresent && board[tempX][tempY]==2)
-                        {
-                            tempX+=i;
-                            tempY+=j;
-                            opPiecePresent = true;
-                        }
-                        else if(opPiecePresent && board[tempX][tempY]==1)
-                        {
-                            return true;
-                        }
-                        else if(board[tempX][tempY]==0)
-                        {
-                            clearPlay = false;
-                        }
+                        opponet=1;
                     }
-                    else
+
+                    if(!opPiecePresent && board[tempX][tempY]==opponet)
                     {
-                        if(!opPiecePresent && board[tempX][tempY]==1)
-                        {
-                            tempX+=i;
-                            tempY+=j;
-                            opPiecePresent = true;
-                        }
-                        else if(opPiecePresent && board[tempX][tempY]==2)
-                        {
-                            return true;
-                        }
-                        else if(board[tempX][tempY]==0)
-                        {
-                            clearPlay = false;
-                        }
+                        tempX+=i;
+                        tempY+=j;
+                        opPiecePresent = true;
+                    }
+                    else if(opPiecePresent && board[tempX][tempY]==player)
+                    {
+                        return true;
+                    }
+                    else if(board[tempX][tempY]==0)
+                    {
+                        clearPlay = false;
                     }
                 }
             }
