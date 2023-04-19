@@ -13,11 +13,11 @@ public class Main {
 
             if(p1Turn){
                 int[] play = p1.humanInput(og);
-                og.play(play[0], play[1], 1);
+                og.play(play[0], play[1]);
             }
             else{
                 int[] play = p2.humanInput(og);
-                og.play(play[0], play[1], 2);
+                og.play(play[0], play[1]);
             }
             p1Turn = !p1Turn;
         }

@@ -125,7 +125,7 @@ public class OthelloGame {
         }
 
         System.out.println("Player " + player + "'s turn");
-        System.out.println(board.toString()); //TODO Make neat board print
+        System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
 
         return true;
     }
