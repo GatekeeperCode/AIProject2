@@ -8,7 +8,7 @@ public class Main {
         OthelloGame og = new OthelloGame();
 
         boolean p1Turn = true;
-        while(!og.gameEndCheck()){
+        while(true){
             System.out.println("Round");
 
             if(p1Turn){
