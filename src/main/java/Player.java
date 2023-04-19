@@ -52,9 +52,9 @@ public class Player {
      */
     public ArrayList<int[]> findMoves(OthelloGame og) {
         ArrayList<int[]> viableMoves = new ArrayList<int[]>();
-        for (int i=0; i<og.board.length; i++) {
-            for (int j=0; j<og.board[i].length; j++) {
-                if (og.viablePlay(i, j)) {
+        for (int i=0; i<og.brd.board.length; i++) {
+            for (int j=0; j<og.brd.board[i].length; j++) {
+                if (og.brd.viablePlay(i, j, playerID)) {
                     int[] temp = {i, j};
                     viableMoves.add(temp);
                 }
@@ -85,7 +85,7 @@ public class Player {
         while(true) {
             try {
                 Scanner scn = new Scanner(System.in);
-                System.out.println(Arrays.deepToString(og.board));
+                System.out.println(Arrays.deepToString(og.brd.board));
                 System.out.println("what's your move? in the form x,y");
                 System.out.print(": ");
                 String[] strSplit = scn.nextLine().split(",");

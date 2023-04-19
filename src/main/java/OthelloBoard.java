@@ -226,4 +226,28 @@ public class OthelloBoard {
 
         return false;
     }
+
+
+    /**
+     * Very Basic heuristic for the board, doesn't take into account piece position
+     * @param playerID The player making the move
+     * @return the heuristic value they would have for the board
+     */
+    public int getHeuristic(int playerID){
+        int score = 0;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                if(board[i][j] == playerID){
+                    score++;
+                }
+                else if (board[i][j] == 0) {
+
+                }
+                else {
+                    score--;
+                }
+            }
+        }
+        return score;
+    }
 }
