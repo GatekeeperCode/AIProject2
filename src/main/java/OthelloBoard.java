@@ -250,4 +250,23 @@ public class OthelloBoard {
         }
         return score;
     }
+
+    public String toString() {
+        String boardPrint = "";
+        for (int i=-1; i<board.length+1; i++) {
+            if (i == -1 || i == board.length) {
+                for (int h = 0; h<board[board.length-1].length; h++) {
+                    boardPrint += " ___";
+                }
+                boardPrint += "\n";
+            }
+            else {
+                for (int j=0; j<board[i].length; j++) {
+                    boardPrint += "| " + board[i][j] + " ";
+                }
+                boardPrint += "|\n";
+            }
+        }
+        return boardPrint;
+    }
 }
