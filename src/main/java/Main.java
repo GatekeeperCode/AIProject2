@@ -7,6 +7,7 @@ public class Main {
         Player p2  = new Player(2);
         OthelloGame og = new OthelloGame();
 
+        //System.out.println(og.brd.toString());
         boolean p1Turn = true;
         while(true){
             System.out.println("Round");
@@ -21,8 +22,5 @@ public class Main {
             }
             p1Turn = !p1Turn;
         }
-
-
-
     }
 }
