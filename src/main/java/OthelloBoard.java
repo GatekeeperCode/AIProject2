@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class OthelloBoard {
@@ -45,6 +46,22 @@ public class OthelloBoard {
 
         curr2Score = score2;
         curr1Score = score1;
+    }
+
+    public OthelloBoard(OthelloBoard ob)
+    {
+        board = new int[8][8];
+
+        for(int i=0; i<ob.board.length; i++)
+        {
+            for(int j=0; j<ob.board[i].length; j++)
+            {
+                board[i][j] = ob.board[i][j];
+            }
+        }
+
+        curr2Score = ob.curr2Score;
+        curr1Score = ob.curr1Score;
     }
 
     /**
@@ -144,30 +161,30 @@ public class OthelloBoard {
         curr2Score = twoScore;
     }
 
-//    /**
-//     * Checks if the game ends here
-//     * @return True if the game ends, false otherwise
-//     */
-//    boolean gameEndCheck()
-//    {
-//        boolean ablePlay = false;
-//
-//        for(int i=0; i<board.length; i++)
-//        {
-//            for(int j=0; j<board[i].length; j++)
-//            {
-//                if(board[i][j]==0)
-//                {
-//                    if(!ablePlay && viablePlay(i,j, 1) && viablePlay(i,j, 2))
-//                    {
-//                        ablePlay=true;
-//                    }
-//                }
-//            }
-//        }
-//
-//        return ablePlay;
-//    }
+    /**
+     * Checks if the game ends here
+     * @return True if the game ends, false otherwise
+     */
+    boolean gameEndCheck()
+    {
+        boolean ablePlay = false;
+
+        for(int i=0; i<board.length; i++)
+        {
+            for(int j=0; j<board[i].length; j++)
+            {
+                if(board[i][j]==0)
+                {
+                    if(!ablePlay && viablePlay(i,j, 1) && viablePlay(i,j, 2))
+                    {
+                        ablePlay=true;
+                    }
+                }
+            }
+        }
+
+        return ablePlay;
+    }
 
     /**
      * Checks if move is valid
