@@ -78,7 +78,7 @@ public class OthelloBoard {
             return false;
         }
 
-        board[xPos][yPos] = player;
+        board[yPos][xPos] = player;
 
         for(int i=-1; i<2; i++)
         {
@@ -86,25 +86,30 @@ public class OthelloBoard {
             {
                 int tempY = yPos + j;
                 int tempX = xPos + i;
+                if(tempX < 0 || tempY < 0 || tempY >7 || tempX > 7){
+                    continue;
+                }
 
-                if(board[tempX][tempY] != 0 && board[tempX][tempY] != player)
+
+                if(board[tempY][tempX] != 0 && board[tempY][tempX] != player)
                 {
                     boolean foundFlip = false;
 
-                    while(tempX< board.length && tempY< board.length)
+                    while(tempX < board.length && tempY< board.length && tempX>0 && tempY>0)
                     {
                         int opponet = 2;
                         if(player==2)
                         {
                             opponet=1;
                         }
+                        System.out.println(tempX + " " + tempY);
 
-                        if(board[tempX][tempY]==opponet)
+                        if(board[tempY][tempX]==opponet)
                         {
                             tempX += i;
                             tempY += j;
                         }
-                        else if(board[tempX][tempY]==player)
+                        else if(board[tempY][tempX]==player)
                         {
                             tempX -= i;
                             tempY -= j;
@@ -127,9 +132,9 @@ public class OthelloBoard {
                             opponet=1;
                         }
 
-                        while(board[tempX][tempY]!=player)
+                        while(board[tempY][tempX]!=player)
                         {
-                            board[tempX][tempY]=player;
+                            board[tempY][tempX]=player;
                             tempX-=i;
                             tempY-=j;
                         }
@@ -221,7 +226,7 @@ public class OthelloBoard {
                 boolean clearPlay = true;
                 boolean opPiecePresent = false;
 
-                if((i==0 && j==0)||(board[tempX][tempY]==0 || board[tempX][tempY]==player))
+                if((i==0 && j==0)||(board[tempY][tempX]==0 || board[tempY][tempX]==player))
                 {
                     clearPlay=false;
                 }
@@ -234,17 +239,17 @@ public class OthelloBoard {
                         opponet=1;
                     }
 
-                    if(!opPiecePresent && board[tempX][tempY]==opponet)
+                    if(!opPiecePresent && board[tempY][tempX]==opponet)
                     {
                         tempX+=i;
                         tempY+=j;
                         opPiecePresent = true;
                     }
-                    else if(opPiecePresent && board[tempX][tempY]==player)
+                    else if(opPiecePresent && board[tempY][tempX]==player)
                     {
                         return true;
                     }
-                    else if(board[tempX][tempY]==0)
+                    else if(board[tempY][tempX]==0)
                     {
                         clearPlay = false;
                     }
