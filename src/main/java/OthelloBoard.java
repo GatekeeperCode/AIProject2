@@ -231,7 +231,7 @@ public class OthelloBoard {
                     clearPlay=false;
                 }
 
-                while(clearPlay)
+                while(clearPlay && tempX<board.length && tempY<board.length && tempX>0 && tempY>0)
                 {
                     int opponet = 2;
                     if(player==2)
