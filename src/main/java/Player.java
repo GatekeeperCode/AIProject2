@@ -132,14 +132,14 @@ public class Player {
         while(true) {
             try {
                 Scanner scn = new Scanner(System.in);
-                System.out.println(Arrays.deepToString(og.brd.board));
+                System.out.println(og.brd);
                 System.out.println("what's your move? in the form x,y");
                 System.out.print(": ");
                 String[] strSplit = scn.nextLine().split(",");
                 if(!og.brd.viablePlay(Integer.parseInt(strSplit[0]), Integer.parseInt(strSplit[1]), playerID)){
                     throw new Exception("Invalid play");
                 }
-                return new int[]{Integer.parseInt(strSplit[0]), Integer.parseInt(strSplit[1])};
+                return new int[]{Integer.parseInt(strSplit[0])-1, Integer.parseInt(strSplit[1]) - 1};
             }
             catch(Exception e){
                 System.out.println("Invalid Play, Try again");
