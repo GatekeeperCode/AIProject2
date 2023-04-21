@@ -90,6 +90,10 @@ public class Player {
             boards.add(newBd);
         }
 
+        if(possibles.size() == 0){
+            return miniMaxHeuristic(ob, depth +1, (player % 2) + 1, maxDepth);
+        }
+
         // TODO Add some discernment about which board to take first (The highest scoring one?)
         int minValue = miniMaxHeuristic(boards.get(0), depth +1, (player % 2) + 1, maxDepth);
         int minIndex = 0;

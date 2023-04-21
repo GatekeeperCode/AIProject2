@@ -13,13 +13,14 @@ public class Main {
             System.out.println("Round");
 
             if(p1Turn){
-                int[] play = p1.humanInput(og);
+                int[] play = p1.getMiniMaxPlay(og);
                 og.makePlay(play[0], play[1]);
             }
             else{
-                int[] play = p2.humanInput(og);
+                int[] play = p2.getMiniMaxPlay(og);
                 og.makePlay(play[0], play[1]);
             }
+            System.out.println(og.brd);
             p1Turn = !p1Turn;
         }
     }

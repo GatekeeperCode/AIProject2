@@ -102,7 +102,7 @@ public class OthelloBoard {
                         {
                             opponet=1;
                         }
-                        System.out.println(tempX + " " + tempY);
+//                        System.out.println(tempX + " " + tempY);
 
                         if(board[tempY][tempX]==opponet)
                         {
@@ -122,7 +122,7 @@ public class OthelloBoard {
                             tempY += j;
                         }
                     }
-                    System.out.println("Escaped while 1");
+//                    System.out.println("Escaped while 1");
 
                     if(foundFlip)
                     {
@@ -138,7 +138,7 @@ public class OthelloBoard {
                             tempX-=i;
                             tempY-=j;
                         }
-                        System.out.println("Escaped while 2");
+//                        System.out.println("Escaped while 2");
 
                     }
                 }
@@ -148,7 +148,7 @@ public class OthelloBoard {
 
         scoreGame();
         //System.out.println("Player " + player + "'s turn");
-        System.out.println(toString()); //TODO Make neat board print
+//        System.out.println(toString()); //TODO Make neat board print
 
         return true;
     }
@@ -198,7 +198,7 @@ public class OthelloBoard {
             }
         }
 
-        System.out.println("Hello");
+//        System.out.println("Hello");
         return ablePlay;
     }
 
