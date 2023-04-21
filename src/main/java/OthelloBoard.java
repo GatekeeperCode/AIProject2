@@ -65,7 +65,7 @@ public class OthelloBoard {
     }
 
     /**
-     * Takes a play at x,y and 1) checks if it's viable, and 2) if viable, follows the procedure
+     * Tests a play at x,y and 1) checks if it's viable, and 2) if viable, follows the procedure
      * @param xPos X postion of placed piece
      * @param yPos Y position of placed piece
      * @return True if play followed through, false if play spot was invalid.
@@ -74,6 +74,7 @@ public class OthelloBoard {
     {
         if(!viablePlay(xPos, yPos, player))
         {
+            System.out.println("Bad hello");
             return false;
         }
 
@@ -110,7 +111,13 @@ public class OthelloBoard {
                             foundFlip = true;
                             break;
                         }
+                        else
+                        {
+                            tempX += i;
+                            tempY += j;
+                        }
                     }
+                    System.out.println("Escaped while 1");
 
                     if(foundFlip)
                     {
@@ -122,18 +129,21 @@ public class OthelloBoard {
 
                         while(board[tempX][tempY]!=player)
                         {
-                            board[tempX][tempY]=opponet;
+                            board[tempX][tempY]=player;
                             tempX-=i;
                             tempY-=j;
                         }
+                        System.out.println("Escaped while 2");
+
                     }
                 }
             }
         }
 
+
         scoreGame();
-        System.out.println("Player " + player + "'s turn");
-        System.out.println(Arrays.deepToString(board)); //TODO Make neat board print
+        //System.out.println("Player " + player + "'s turn");
+        System.out.println(toString()); //TODO Make neat board print
 
         return true;
     }
@@ -183,6 +193,7 @@ public class OthelloBoard {
             }
         }
 
+        System.out.println("Hello");
         return ablePlay;
     }
 
@@ -203,14 +214,14 @@ public class OthelloBoard {
             {
                 tempY = yPos+j;
                 tempX = xPos+i;
-//                if(tempX < 0 || tempY < 0 || tempY >7 || tempX > 7){
-//                    continue;
-//                }
+                if(tempX < 0 || tempY < 0 || tempY >7 || tempX > 7){
+                    continue;
+                }
 
                 boolean clearPlay = true;
                 boolean opPiecePresent = false;
 
-                if(i==0 && j==0)
+                if((i==0 && j==0)||(board[tempX][tempY]==0 || board[tempX][tempY]==player))
                 {
                     clearPlay=false;
                 }
@@ -236,6 +247,11 @@ public class OthelloBoard {
                     else if(board[tempX][tempY]==0)
                     {
                         clearPlay = false;
+                    }
+                    else
+                    {
+                        tempX+=i;
+                        tempY+=j;
                     }
                 }
             }

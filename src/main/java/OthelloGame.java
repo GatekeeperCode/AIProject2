@@ -25,28 +25,34 @@ public class OthelloGame {
 
     void makePlay(int xPos, int yPos)
     {
+        System.out.println("Player: " + player);
         if(brd.viablePlay(xPos,yPos, player))
         {
-            brd.play(xPos, yPos, player);
+            System.out.println("Viable check");
+            if(brd.play(xPos, yPos, player))
+            {
+                System.out.println("Play Check");
+                if(player==1)
+                {
+                    System.out.println("Ehllo");
+                    player = 2;
+                }
+                else
+                {
+                    player=1;
+                }
 
-            if(player==1)
-            {
-                player = 2;
-            }
-            else
-            {
-                player=1;
-            }
+                System.out.println("Player " + player + "'s turn");
 
-            if(!gameEndCheck())
-            {
-                scoreFinalGame();
+                if(!gameEndCheck())
+                {
+                    scoreFinalGame();
+                }
+                return;
             }
         }
-        else
-        {
-            System.out.println("Play location was invalid, please choose another spot.");
-        }
+
+        System.out.println("Play location was invalid, please choose another spot.");
     }
 
 
@@ -95,15 +101,6 @@ public class OthelloGame {
     {
         boolean ablePlay = false;
 
-        if(player==1)
-        {
-            player=2;
-        }
-        else
-        {
-            player=1;
-        }
-
         for(int i=0; i<brd.board.length; i++)
         {
             for(int j=0; j<brd.board[i].length; j++)
@@ -116,11 +113,6 @@ public class OthelloGame {
                     }
                 }
             }
-        }
-
-        if(!ablePlay)
-        {
-            scoreFinalGame();
         }
 
         return ablePlay;
