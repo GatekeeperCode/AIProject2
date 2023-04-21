@@ -136,9 +136,12 @@ public class Player {
                 System.out.println("what's your move? in the form x,y");
                 System.out.print(": ");
                 String[] strSplit = scn.nextLine().split(",");
-                if(!og.brd.viablePlay(Integer.parseInt(strSplit[0]), Integer.parseInt(strSplit[1]), playerID)){
+                System.out.println("I");
+                if(!og.brd.viablePlay(Integer.parseInt(strSplit[0])-1, Integer.parseInt(strSplit[1])-1, playerID)){
+                    System.out.println("XEption");
                     throw new Exception("Invalid play");
                 }
+                System.out.println("HI");
                 return new int[]{Integer.parseInt(strSplit[0])-1, Integer.parseInt(strSplit[1]) - 1};
             }
             catch(Exception e){
