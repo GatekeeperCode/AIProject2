@@ -210,6 +210,11 @@ public class OthelloBoard {
      */
     boolean viablePlay(int xPos, int yPos, int player)
     {
+        if(board[yPos][xPos]!=0)
+        {
+            return false;
+        }
+
         int tempX;
         int tempY;
 
