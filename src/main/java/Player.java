@@ -54,10 +54,12 @@ public class Player {
             boards.add(newBd);
         }
 
-        int bestPlayValue = miniMaxHeuristic(boards.get(0), 0, playerID, searchDepth);
+        int[] startalbe = {-100, 100};
+
+        int bestPlayValue = miniMaxHeuristic(boards.get(0), 0, playerID, searchDepth, startalbe);
         int bestPlayIndex = 0;
         for(int i  = 1; i < boards.size(); i++){
-            int val = miniMaxHeuristic(boards.get(i), 0, playerID, searchDepth);
+            int val = miniMaxHeuristic(boards.get(i), 0, playerID, searchDepth, startalbe);
             if (val > bestPlayValue){
                 bestPlayValue = val;
                 bestPlayIndex = i;
@@ -76,7 +78,7 @@ public class Player {
      * @param maxDepth The maximum search depth
      * @return the best score for the current player to date
      */
-    public int miniMaxHeuristic(OthelloBoard ob, int depth, int player, int maxDepth) {
+    public int miniMaxHeuristic(OthelloBoard ob, int depth, int player, int maxDepth, int[] alphabeta) {
         if(depth >= maxDepth || ob.gameEndCheck()){
             return ob.getHeuristic(player);
         }
@@ -91,14 +93,27 @@ public class Player {
         }
 
         if(possibles.size() == 0){
-            return miniMaxHeuristic(ob, depth +1, (player % 2) + 1, maxDepth);
+            return miniMaxHeuristic(ob, depth +1, (player % 2) + 1, maxDepth, alphabeta);
         }
 
         // TODO Add some discernment about which board to take first (The highest scoring one?)
-        int minValue = miniMaxHeuristic(boards.get(0), depth +1, (player % 2) + 1, maxDepth);
+        int[] albe = {alphabeta[0], alphabeta[1]};
+
+        int minValue = miniMaxHeuristic(boards.get(0), depth +1, (player % 2) + 1, maxDepth, albe);
         int minIndex = 0;
+        albe = calculateAB(alphabeta, minValue, (player%2)+1);
+        if (albe == null) {
+            return boards.get(minIndex).getHeuristic(player);
+        }
+
         for(int i = 1; i < possibles.size(); i++){
-            int val = miniMaxHeuristic(boards.get(i), depth +1, (player % 2) + 1, maxDepth);
+            int val = miniMaxHeuristic(boards.get(i), depth +1, (player % 2) + 1, maxDepth, albe);
+
+            albe = calculateAB(albe, val, (player%2)+1);
+            if (albe == null) {
+                break;
+            }
+
             if (val < minValue){
                 minValue = val;
                 minIndex = i;
@@ -106,6 +121,29 @@ public class Player {
         }
 
         return boards.get(minIndex).getHeuristic(player);
+    }
+
+    /**
+     * Assist method for the minimaxHeuristic() method; performs calculations needed for
+     * Alpha-Beta Pruning.
+     * @param alphabeta - Array of alpha-beta values [alpha, beta]
+     * @param val - The heuristic value of that world
+     * @param playerID - The player responsible for the turn of that world
+     * @return - Returns an int[] of alpha-beta values if not to be skipped, otherwise return null
+     */
+    public int[] calculateAB(int[] alphabeta, int val, int playerID) {
+        int[] albe = {alphabeta[0], alphabeta[1]};
+
+        if (val > albe[0] && playerID == 1) {
+            albe[0] = val;
+        }
+        if (val < albe[1] && playerID == 2) {
+            albe[1] = val;
+        }
+        if (albe[0] >= albe[1]) {
+            return null;
+        }
+        return albe;
     }
 
     /**
@@ -153,6 +191,4 @@ public class Player {
             }
         }
     }
-
-
 }
