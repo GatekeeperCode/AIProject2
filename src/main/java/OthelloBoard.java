@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class OthelloBoard {
     /**
      * Keeps Track of:
@@ -13,8 +10,6 @@ public class OthelloBoard {
     int[][] board;
     int curr1Score;
     int curr2Score;
-
-
 
     public OthelloBoard()
     {
@@ -265,21 +260,55 @@ public class OthelloBoard {
 
     /**
      * Very Basic heuristic for the board, doesn't take into account piece position
-     * @param playerID The player making the move
+     * @param player The player making the move
      * @return the heuristic value they would have for the board
      */
-    public int getHeuristic(int playerID){
+    public int getHeuristicEstimate(int player, int heuristicType){
+        if(heuristicType == 1) {
+            return basicHeuristic(player);
+        }
+        else if(heuristicType == 2){
+            return basicPositionalHeuristic(player);
+        }
+        else {
+            return basicHeuristic(player);
+        }
+    }
+
+    public int basicHeuristic(int playerID){
         int score = 0;
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board.length; j++){
                 if(board[i][j] == playerID){
                     score++;
                 }
-                else if (board[i][j] == 0) {
-
-                }
-                else {
+                else if (board[i][j] == Player.getOpponent(playerID)){
                     score--;
+                }
+            }
+        }
+        return score;
+    }
+
+    public int basicPositionalHeuristic(int playerID){
+        int score = 0;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+                int posVal = 1;
+                boolean iEdge = i == 0 || i == board.length-1;
+                boolean jEdge = j == 0 || j == board.length-1;
+                if(iEdge && jEdge){
+                    posVal = 5;
+                }
+                else if(iEdge || jEdge){
+                    posVal = 2;
+                }
+
+                if(board[i][j] == playerID){
+                    score += posVal;
+                }
+                else if (board[i][j] == Player.getOpponent(playerID)){
+                    score -= posVal;
                 }
             }
         }

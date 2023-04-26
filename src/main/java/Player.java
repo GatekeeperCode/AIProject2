@@ -1,38 +1,38 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Player {
     //This is an int to keep it consistent with the Othello game board.
     private int playerID;
-    private int score;
+
+    private int heuristicType;
+
+    private int maxSearchDepth;
 
     //Depends on how we want to do this one
 
-    public Player(int playerID) {
+    public Player(int playerID, int heuristicType, int searchDepth) {
         this.playerID = playerID;
-        score = 0;
+        this.heuristicType = heuristicType;
+        this.maxSearchDepth = searchDepth;
     }
 
     public Player(Player p) {
-        this.playerID = p.getPlayerID();
-        this.score = p.getScore();
+        this.playerID = p.getID();
+        this.heuristicType = p.heuristicType;
+        this.maxSearchDepth = p.maxSearchDepth;
     }
 
-    public int getPlayerID() {
+    public int getID() {
         return playerID;
     }
 
-    public void setPlayerID(int playerID) {
-        this.playerID = playerID;
+    public int getHeuristicType(){
+        return heuristicType;
     }
 
-    public int getScore() {
-        return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+    public int getMaxSearchDepth(){
+        return maxSearchDepth;
     }
 
     /**
@@ -42,7 +42,6 @@ public class Player {
      * @return - The tuple of integers for this player's next move.
      */
     public int[] getMiniMaxPlay(OthelloGame og) {
-        int searchDepth = 4;
 
         //Duplicated in miniMaxHeuristic but both structures needed here too
         ArrayList<int[]> possibles = findMoves(og.brd, playerID);
@@ -56,10 +55,10 @@ public class Player {
 
         int[] startalbe = {-100, 100};
 
-        int bestPlayValue = miniMaxHeuristic(boards.get(0), 0, playerID, searchDepth, startalbe);
+        int bestPlayValue = miniMaxHeuristic(boards.get(0), 0, playerID, maxSearchDepth, startalbe);
         int bestPlayIndex = 0;
         for(int i  = 1; i < boards.size(); i++){
-            int val = miniMaxHeuristic(boards.get(i), 0, playerID, searchDepth, startalbe);
+            int val = miniMaxHeuristic(boards.get(i), 0, playerID, maxSearchDepth, startalbe);
             if (val > bestPlayValue){
                 bestPlayValue = val;
                 bestPlayIndex = i;
@@ -80,7 +79,7 @@ public class Player {
      */
     public int miniMaxHeuristic(OthelloBoard ob, int depth, int player, int maxDepth, int[] alphabeta) {
         if(depth >= maxDepth || ob.gameEndCheck()){
-            return ob.getHeuristic(player);
+            return ob.getHeuristicEstimate(player, heuristicType);
         }
 
         ArrayList<int[]> possibles = findMoves(ob, player);
@@ -93,23 +92,23 @@ public class Player {
         }
 
         if(possibles.size() == 0){
-            return miniMaxHeuristic(ob, depth +1, (player % 2) + 1, maxDepth, alphabeta);
+            return miniMaxHeuristic(ob, depth +1, Player.getOpponent(playerID), maxDepth, alphabeta);
         }
 
         // TODO Add some discernment about which board to take first (The highest scoring one?)
         int[] albe = {alphabeta[0], alphabeta[1]};
 
-        int minValue = miniMaxHeuristic(boards.get(0), depth +1, (player % 2) + 1, maxDepth, albe);
+        int minValue = miniMaxHeuristic(boards.get(0), depth +1, Player.getOpponent(playerID), maxDepth, albe);
         int minIndex = 0;
         albe = calculateAB(alphabeta, minValue, (player%2)+1);
         if (albe == null) {
-            return boards.get(minIndex).getHeuristic(player);
+            return boards.get(minIndex).getHeuristicEstimate(player, heuristicType);
         }
 
         for(int i = 1; i < possibles.size(); i++){
-            int val = miniMaxHeuristic(boards.get(i), depth +1, (player % 2) + 1, maxDepth, albe);
+            int val = miniMaxHeuristic(boards.get(i), depth +1, Player.getOpponent(playerID), maxDepth, albe);
 
-            albe = calculateAB(albe, val, (player%2)+1);
+            albe = calculateAB(albe, val, Player.getOpponent(playerID));
             if (albe == null) {
                 break;
             }
@@ -120,7 +119,7 @@ public class Player {
             }
         }
 
-        return boards.get(minIndex).getHeuristic(player);
+        return boards.get(minIndex).getHeuristicEstimate(player, heuristicType);
     }
 
     /**
@@ -191,4 +190,13 @@ public class Player {
             }
         }
     }
+
+    public static int getOpponent(Player player){
+        return getOpponent(player.playerID);
+    }
+
+    public static int getOpponent(int player){
+        return (player % 2) + 1;
+    }
+
 }
