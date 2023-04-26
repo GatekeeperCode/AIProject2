@@ -224,11 +224,15 @@ public class OthelloBoard {
                 }
 
                 boolean clearPlay = true;
-                boolean opPiecePresent = false;
 
                 if((i==0 && j==0)||(board[tempY][tempX]==0 || board[tempY][tempX]==player))
                 {
                     clearPlay=false;
+                }
+                else
+                {
+                    tempX+=i;
+                    tempY+=j;
                 }
 
                 while(clearPlay && tempX<board.length && tempY<board.length && tempX>0 && tempY>0)
@@ -239,13 +243,7 @@ public class OthelloBoard {
                         opponet=1;
                     }
 
-                    if(!opPiecePresent && board[tempY][tempX]==opponet)
-                    {
-                        tempX+=i;
-                        tempY+=j;
-                        opPiecePresent = true;
-                    }
-                    else if(opPiecePresent && board[tempY][tempX]==player)
+                    if(board[tempY][tempX]==player)
                     {
                         return true;
                     }
