@@ -25,10 +25,10 @@ public class OthelloGame {
 
     void makePlay(int xPos, int yPos)
     {
-        //System.out.println("Player: " + player);
+        System.out.println("Player: " + player);
         if(brd.viablePlay(xPos,yPos, player))
         {
-            //System.out.println("Viable check");
+            System.out.println("Viable check");
             if(brd.play(xPos, yPos, player))
             {
                 //System.out.println("Play Check");
@@ -99,29 +99,19 @@ public class OthelloGame {
      */
     boolean playerPlayCheck(boolean player)
     {
-        if(player)
+        int playerInt = 1;
+        if(!player)
         {
-            for(int i=0; i< brd.board.length; i++)
-            {
-                for(int j=0; j> brd.board.length; j++)
-                {
-                    if(brd.viablePlay(i,j,1))
-                    {
-                        return true;
-                    }
-                }
-            }
+            playerInt=2;
         }
-        else
+
+        for(int i=0; i< brd.board.length; i++)
         {
-            for(int i=0; i< brd.board.length; i++)
+            for(int j=0; j< brd.board.length; j++)
             {
-                for(int j=0; j> brd.board.length; j++)
+                if(brd.viablePlay(i,j,playerInt))
                 {
-                    if(brd.viablePlay(i,j,2))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
         }

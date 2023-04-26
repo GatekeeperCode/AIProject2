@@ -237,12 +237,6 @@ public class OthelloBoard {
 
                 while(clearPlay && tempX<board.length && tempY<board.length && tempX>0 && tempY>0)
                 {
-                    int opponet = 2;
-                    if(player==2)
-                    {
-                        opponet=1;
-                    }
-
                     if(board[tempY][tempX]==player)
                     {
                         return true;
