@@ -42,7 +42,7 @@ public class Player {
      * @return - The tuple of integers for this player's next move.
      */
     public int[] getMiniMaxPlay(OthelloGame og) {
-        int searchDepth = 10;
+        int searchDepth = 4;
 
         //Duplicated in miniMaxHeuristic but both structures needed here too
         ArrayList<int[]> possibles = findMoves(og.brd, playerID);
@@ -152,7 +152,7 @@ public class Player {
      * @return - All possible (viable) moves that this player can take during the next move.
      */
     public static ArrayList<int[]> findMoves(OthelloBoard ob, int player) {
-        ArrayList<int[]> viableMoves = new ArrayList<int[]>();
+        ArrayList<int[]> viableMoves = new ArrayList<>();
         for (int i=0; i<ob.board.length; i++) {
             for (int j=0; j<ob.board[i].length; j++) {
                 if (ob.viablePlay(i, j, player)) {

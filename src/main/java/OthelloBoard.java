@@ -188,7 +188,7 @@ public class OthelloBoard {
         {
             for(int j=0; j<board[i].length; j++)
             {
-                if(board[i][j]==0)
+                if(board[j][i]==0)
                 {
                     if(!ablePlay && viablePlay(i,j, 1) && viablePlay(i,j, 2))
                     {
@@ -210,6 +210,11 @@ public class OthelloBoard {
      */
     boolean viablePlay(int xPos, int yPos, int player)
     {
+        if(board[yPos][xPos]!=0)
+        {
+            return false;
+        }
+
         int tempX;
         int tempY;
 
@@ -224,28 +229,20 @@ public class OthelloBoard {
                 }
 
                 boolean clearPlay = true;
-                boolean opPiecePresent = false;
 
                 if((i==0 && j==0)||(board[tempY][tempX]==0 || board[tempY][tempX]==player))
                 {
                     clearPlay=false;
                 }
+                else
+                {
+                    tempX+=i;
+                    tempY+=j;
+                }
 
                 while(clearPlay && tempX<board.length && tempY<board.length && tempX>0 && tempY>0)
                 {
-                    int opponet = 2;
-                    if(player==2)
-                    {
-                        opponet=1;
-                    }
-
-                    if(!opPiecePresent && board[tempY][tempX]==opponet)
-                    {
-                        tempX+=i;
-                        tempY+=j;
-                        opPiecePresent = true;
-                    }
-                    else if(opPiecePresent && board[tempY][tempX]==player)
+                    if(board[tempY][tempX]==player)
                     {
                         return true;
                     }
