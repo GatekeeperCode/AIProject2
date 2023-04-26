@@ -25,10 +25,10 @@ public class OthelloGame {
 
     void makePlay(int xPos, int yPos)
     {
-        System.out.println("Player: " + player);
+//        System.out.println("Player: " + player);
         if(brd.viablePlay(xPos,yPos, player))
         {
-            System.out.println("Viable check");
+//            System.out.println("Viable check");
             if(brd.play(xPos, yPos, player))
             {
                 //System.out.println("Play Check");
@@ -41,7 +41,7 @@ public class OthelloGame {
                     player=1;
                 }
 
-                System.out.println("Player " + player + "'s turn");
+                playerPlayCheck(player);
 
                 if(!gameEndCheck())
                 {
@@ -70,7 +70,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
+            System.out.println(brd); //TODO Make neat board print
         }
         else if(oneScore>twoScore)
         {
@@ -78,7 +78,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
+            System.out.println(brd); //TODO Make neat board print
         }
         else
         {
@@ -86,7 +86,7 @@ public class OthelloGame {
             System.out.println("Player One Score: " + oneScore);
             System.out.println("Player Two Score: " + twoScore);
             System.out.println();
-            System.out.println(Arrays.deepToString(brd.board)); //TODO Make neat board print
+            System.out.println(brd); //TODO Make neat board print
         }
 
         System.exit(0);
@@ -97,26 +97,20 @@ public class OthelloGame {
      * @param player Current player
      * @return True if player is able to make a play, false otherwise
      */
-    boolean playerPlayCheck(boolean player)
+    void playerPlayCheck(int player)
     {
-        int playerInt = 1;
-        if(!player)
-        {
-            playerInt=2;
-        }
+        player = (player % 2) + 1;
 
         for(int i=0; i< brd.board.length; i++)
         {
             for(int j=0; j< brd.board.length; j++)
             {
-                if(brd.viablePlay(i,j,playerInt))
+                if(brd.viablePlay(i,j,player))
                 {
-                    return true;
+                    player = (player % 2) + 1;
                 }
             }
         }
-
-        return false;
     }
 
     /**

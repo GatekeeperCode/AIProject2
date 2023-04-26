@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args)
     {
@@ -7,25 +9,23 @@ public class Main {
         Player p2  = new Player(2);
         OthelloGame og = new OthelloGame();
 
-        //System.out.println(og.brd.toString());
-        boolean p1Turn = true;
         while(true){
-            System.out.println("Round");
-
-            if(p1Turn){
+//            System.out.println("Turn: " + og.player);
+            System.out.println("Player " + og.player + "'s turn");
+            if(og.player == 1){
                 int[] play = p1.getMiniMaxPlay(og);
+                System.out.println(Arrays.toString(play));
+
                 og.makePlay(play[0], play[1]);
+
             }
             else{
                 int[] play = p2.getMiniMaxPlay(og);
+                System.out.println(Arrays.toString(play));
                 og.makePlay(play[0], play[1]);
+
             }
             System.out.println(og.brd);
-
-            if(og.playerPlayCheck(!p1Turn))
-            {
-                p1Turn = !p1Turn;
-            }
         }
     }
 }

@@ -42,7 +42,7 @@ public class Player {
      * @return - The tuple of integers for this player's next move.
      */
     public int[] getMiniMaxPlay(OthelloGame og) {
-        int searchDepth = 10;
+        int searchDepth = 4;
 
         //Duplicated in miniMaxHeuristic but both structures needed here too
         ArrayList<int[]> possibles = findMoves(og.brd, playerID);
@@ -53,6 +53,8 @@ public class Player {
             newBd.play(possibles.get(i)[0], possibles.get(i)[1], playerID);
             boards.add(newBd);
         }
+
+//        System.out.println(possibles.size());
 
         int bestPlayValue = miniMaxHeuristic(boards.get(0), 0, playerID, searchDepth);
         int bestPlayIndex = 0;
@@ -77,6 +79,10 @@ public class Player {
      * @return the best score for the current player to date
      */
     public int miniMaxHeuristic(OthelloBoard ob, int depth, int player, int maxDepth) {
+//        System.out.println("LoopING");
+//        System.out.println(depth + ";" + maxDepth);
+//        System.out.println(ob);
+//        System.out.println(player + "d" + depth);
         if(depth >= maxDepth || ob.gameEndCheck()){
             return ob.getHeuristic(player);
         }
@@ -114,7 +120,7 @@ public class Player {
      * @return - All possible (viable) moves that this player can take during the next move.
      */
     public static ArrayList<int[]> findMoves(OthelloBoard ob, int player) {
-        ArrayList<int[]> viableMoves = new ArrayList<int[]>();
+        ArrayList<int[]> viableMoves = new ArrayList<>();
         for (int i=0; i<ob.board.length; i++) {
             for (int j=0; j<ob.board[i].length; j++) {
                 if (ob.viablePlay(i, j, player)) {
