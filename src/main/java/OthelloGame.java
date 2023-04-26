@@ -25,16 +25,15 @@ public class OthelloGame {
 
     void makePlay(int xPos, int yPos)
     {
-        System.out.println("Player: " + player);
+        //System.out.println("Player: " + player);
         if(brd.viablePlay(xPos,yPos, player))
         {
-            System.out.println("Viable check");
+            //System.out.println("Viable check");
             if(brd.play(xPos, yPos, player))
             {
-                System.out.println("Play Check");
+                //System.out.println("Play Check");
                 if(player==1)
                 {
-                    System.out.println("Ehllo");
                     player = 2;
                 }
                 else
@@ -91,6 +90,43 @@ public class OthelloGame {
         }
 
         System.exit(0);
+    }
+
+    /**
+     * Checks if the current player is able to make a move.
+     * @param player Current player
+     * @return True if player is able to make a play, false otherwise
+     */
+    boolean playerPlayCheck(boolean player)
+    {
+        if(player)
+        {
+            for(int i=0; i< brd.board.length; i++)
+            {
+                for(int j=0; j> brd.board.length; j++)
+                {
+                    if(brd.viablePlay(i,j,1))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        else
+        {
+            for(int i=0; i< brd.board.length; i++)
+            {
+                for(int j=0; j> brd.board.length; j++)
+                {
+                    if(brd.viablePlay(i,j,2))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     /**

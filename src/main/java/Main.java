@@ -21,7 +21,11 @@ public class Main {
                 og.makePlay(play[0], play[1]);
             }
             System.out.println(og.brd);
-            p1Turn = !p1Turn;
+
+            if(og.playerPlayCheck(!p1Turn))
+            {
+                p1Turn = !p1Turn;
+            }
         }
     }
 }
