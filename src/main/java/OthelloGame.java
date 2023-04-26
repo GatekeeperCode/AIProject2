@@ -127,9 +127,9 @@ public class OthelloGame {
             {
                 if(brd.board[i][j]==0)
                 {
-                    if(!ablePlay && brd.viablePlay(i,j,player))
+                    if(!ablePlay && brd.viablePlay(j,i,player))
                     {
-                        ablePlay=true;
+                        return true;
                     }
                 }
             }
