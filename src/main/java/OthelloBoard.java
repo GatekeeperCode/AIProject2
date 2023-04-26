@@ -188,7 +188,7 @@ public class OthelloBoard {
         {
             for(int j=0; j<board[i].length; j++)
             {
-                if(board[i][j]==0)
+                if(board[j][i]==0)
                 {
                     if(!ablePlay && viablePlay(i,j, 1) && viablePlay(i,j, 2))
                     {
