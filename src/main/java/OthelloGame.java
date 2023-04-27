@@ -115,19 +115,17 @@ public class OthelloGame {
 
     /**
      * Checks if the game ends here
-     * @return True if the game ends, false otherwise
+     * @return False if the game ends, True otherwise
      */
     boolean gameEndCheck()
     {
-        boolean ablePlay = false;
-
         for(int i=0; i<brd.board.length; i++)
         {
-            for(int j=0; j<brd.board[i].length; j++)
+            for(int j=0; j<brd.board.length; j++)
             {
-                if(brd.board[i][j]==0)
+                if(brd.board[j][i]==0)
                 {
-                    if(!ablePlay && brd.viablePlay(j,i,player))
+                    if(brd.viablePlay(i,j,player))
                     {
                         return true;
                     }
@@ -135,6 +133,6 @@ public class OthelloGame {
             }
         }
 
-        return ablePlay;
+        return false;
     }
 }

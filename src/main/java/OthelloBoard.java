@@ -90,14 +90,14 @@ public class OthelloBoard {
                 {
                     boolean foundFlip = false;
 
-                    while(tempX < board.length && tempY< board.length && tempX>0 && tempY>0)
+                    while(tempX < board.length && tempY< board.length && tempX>=0 && tempY>=0)
                     {
                         int opponet = 2;
                         if(player==2)
                         {
                             opponet=1;
                         }
-//                        System.out.println(tempX + " " + tempY);
+//                      System.out.println(tempX + " " + tempY);
 
                         if(board[tempY][tempX]==opponet)
                         {
@@ -113,26 +113,14 @@ public class OthelloBoard {
                         }
                         else
                         {
-                            tempX += i;
-                            tempY += j;
+                            break;
                         }
                     }
 //                    System.out.println("Escaped while 1");
 
                     if(foundFlip)
                     {
-                        int opponet = 2;
-                        if(player==2)
-                        {
-                            opponet=1;
-                        }
-
-                        while(board[tempY][tempX]!=player)
-                        {
-                            board[tempY][tempX]=player;
-                            tempX-=i;
-                            tempY-=j;
-                        }
+                        flipChips(tempX, tempY, player, i, j);
 //                        System.out.println("Escaped while 2");
 
                     }
@@ -141,11 +129,21 @@ public class OthelloBoard {
         }
 
 
-        scoreGame();
+//        scoreGame();
         //System.out.println("Player " + player + "'s turn");
 //        System.out.println(toString()); //TODO Make neat board print
 
         return true;
+    }
+
+    void flipChips(int tempX, int tempY, int player, int xChange, int yChange)
+    {
+        while(board[tempY][tempX]!=player)
+        {
+            board[tempY][tempX]=player;
+            tempX-=xChange;
+            tempY-=yChange;
+        }
     }
 
     /**
@@ -177,24 +175,22 @@ public class OthelloBoard {
      */
     boolean gameEndCheck()
     {
-        boolean ablePlay = false;
-
         for(int i=0; i<board.length; i++)
         {
-            for(int j=0; j<board[i].length; j++)
+            for(int j=0; j<board.length; j++)
             {
                 if(board[j][i]==0)
                 {
-                    if(!ablePlay && viablePlay(i,j, 1) && viablePlay(i,j, 2))
+                    if(viablePlay(i,j, 1) && viablePlay(i,j, 2))
                     {
-                        ablePlay=true;
+                        return false;
                     }
                 }
             }
         }
 
 //        System.out.println("Hello");
-        return ablePlay;
+        return true;
     }
 
     /**
@@ -235,7 +231,7 @@ public class OthelloBoard {
                     tempY+=j;
                 }
 
-                while(clearPlay && tempX<board.length && tempY<board.length && tempX>0 && tempY>0)
+                while(clearPlay && tempX<board.length && tempY<board.length && tempX>=0 && tempY>=0)
                 {
                     if(board[tempY][tempX]==player)
                     {
