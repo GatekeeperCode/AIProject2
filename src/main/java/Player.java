@@ -9,16 +9,20 @@ public class Player {
 
     private int maxSearchDepth;
 
+    private boolean isHuman;
+
     //Depends on how we want to do this one
 
-    public Player(int playerID, int heuristicType, int searchDepth) {
+    public Player(int playerID, boolean human ,int heuristicType, int searchDepth) {
         this.playerID = playerID;
+        this.isHuman = human;
         this.heuristicType = heuristicType;
         this.maxSearchDepth = searchDepth;
     }
 
     public Player(Player p) {
         this.playerID = p.getID();
+        this.isHuman = false;
         this.heuristicType = p.heuristicType;
         this.maxSearchDepth = p.maxSearchDepth;
     }
@@ -33,6 +37,18 @@ public class Player {
 
     public int getMaxSearchDepth(){
         return maxSearchDepth;
+    }
+
+    public boolean isHuman(){
+        return isHuman;
+    }
+    public int[] getPlay(OthelloGame og){
+        if(isHuman){
+            return humanInput(og);
+        }
+        else{
+            return getMiniMaxPlay(og);
+        }
     }
 
     /**

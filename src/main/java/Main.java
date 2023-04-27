@@ -5,22 +5,22 @@ public class Main {
     {
         System.out.println("Hello World!");
 
-        Player p1  = new Player(1, 2, 60);
-        Player p2  = new Player(2, 2, 60);
+        Player p1  = new Player(1, false, 1, 64);
+        Player p2  = new Player(2, false, 1, 64);
         OthelloGame og = new OthelloGame();
 
         while(true){
 //            System.out.println("Turn: " + og.player);
             System.out.println("Player " + og.player + "'s turn");
             if(og.player == 1){
-                int[] play = p1.getMiniMaxPlay(og);
+                int[] play = p1.getPlay(og);
                 System.out.println(Arrays.toString(play));
 
                 og.makePlay(play[0], play[1]);
 
             }
             else{
-                int[] play = p2.getMiniMaxPlay(og);
+                int[] play = p2.getPlay(og);
                 System.out.println(Arrays.toString(play));
                 og.makePlay(play[0], play[1]);
 
