@@ -114,9 +114,9 @@ public class Player {
         // TODO Add some discernment about which board to take first (The highest scoring one?)
         int[] albe = {alphabeta[0], alphabeta[1]};
 
-        int minValue = miniMaxHeuristic(boards.get(0), depth +1, Player.getOpponent(playerID), maxDepth, albe);
+        int maxValue = miniMaxHeuristic(boards.get(0), depth +1, Player.getOpponent(playerID), maxDepth, albe);
         int minIndex = 0;
-        albe = calculateAB(alphabeta, minValue, (player%2)+1);
+        albe = calculateAB(alphabeta, maxValue, (player%2)+1);
         if (albe == null) {
             return boards.get(minIndex).getHeuristicEstimate(player, heuristicType);
         }
@@ -129,8 +129,8 @@ public class Player {
                 break;
             }
 
-            if (val < minValue){
-                minValue = val;
+            if (val > maxValue){
+                maxValue = val;
                 minIndex = i;
             }
         }
