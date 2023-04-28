@@ -147,6 +147,10 @@ public class Player {
      * @return - Returns an int[] of alpha-beta values if not to be skipped, otherwise return null
      */
     public int[] calculateAB(int[] alphabeta, int val, int playerID) {
+        if(playerID == 2){
+            val = -val;
+        }
+
         int[] albe = {alphabeta[0], alphabeta[1]};
 
         if (val > albe[0] && playerID == 1) {
