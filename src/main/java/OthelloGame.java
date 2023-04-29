@@ -119,13 +119,16 @@ public class OthelloGame {
      */
     boolean gameEndCheck()
     {
+        int opponet = 2;
+        if(player==2){opponet=1;}
+
         for(int i=0; i<brd.board.length; i++)
         {
             for(int j=0; j<brd.board.length; j++)
             {
                 if(brd.board[j][i]==0)
                 {
-                    if(brd.viablePlay(i,j,player))
+                    if(brd.viablePlay(i,j,player) && brd.viablePlay(i,j,opponet))
                     {
                         return true;
                     }
