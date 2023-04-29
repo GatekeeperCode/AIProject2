@@ -266,11 +266,19 @@ public class OthelloBoard {
         else if(heuristicType == 2){
             return basicPositionalHeuristic(player);
         }
+        else if(heuristicType == 3){
+            return SAHeuristic(player);
+        }
         else {
             return basicHeuristic(player);
         }
     }
 
+    /**
+     * Calculates a heuristic value based on raw number of pieces more than the opponent
+     * @param playerID the player whose turn it is
+     * @return the heuristic value
+     */
     public int basicHeuristic(int playerID){
         int score = 0;
         for(int i = 0; i < board.length; i++){
@@ -286,6 +294,12 @@ public class OthelloBoard {
         return score;
     }
 
+    /**
+     * Calculates a heuristic value based on the position of tokens. Pieces on the edge and corner
+     * are worth more than in the center
+     * @param playerID the player whose turn it is
+     * @return the heuristic value
+     */
     public int basicPositionalHeuristic(int playerID){
         int score = 0;
         for(int i = 0; i < board.length; i++){
@@ -310,6 +324,55 @@ public class OthelloBoard {
         }
         return score;
     }
+
+    /**
+     * Calculates a heuristic based on the number of exposed pieces
+     * the player has
+     * @param playerID the player whose turn it is
+     * @return the heuristic value
+     */
+    public int SAHeuristic(int playerID){
+        int pieceAdvantage = basicHeuristic(playerID);
+        int numberOfEdgeSpaces = 0;
+        for(int i = 0; i < board.length; i++){
+            for(int j = 0; j < board.length; j++){
+
+                if(board[i][j] == playerID) {
+                    if(checkSurroundingsForOpenSpace(i,j)){
+                        numberOfEdgeSpaces++;
+                    }
+                }
+            }
+        }
+        return pieceAdvantage - numberOfEdgeSpaces ;
+    }
+
+    /**
+     * Checks the surrounding 8 tiles for pieces, if one is empty, return true
+     * @param i the x coordinate of the space
+     * @param j the y coordinate of the space
+     * @return if a surrounding space is empty
+     */
+    private boolean checkSurroundingsForOpenSpace(int i, int j){
+        //a is the horizontal offset, b is the vertical
+        for (int a = -1; a < 2; a++) {
+            for (int b = -1; b < 2; b++) {
+                if(isOnBoard(i+a, j+b)){
+                    if(board[i+a][j+b] == 0){
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean isOnBoard(int x, int y){
+        return x < board.length && x > 0 && y < board.length && y > 0;
+    }
+
+
+
 
     public String toString() {
         String boardPrint = "";
