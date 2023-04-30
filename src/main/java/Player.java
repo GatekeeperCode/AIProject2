@@ -141,6 +141,10 @@ public class Player {
     /**
      * Assist method for the minimaxHeuristic() method; performs calculations needed for
      * Alpha-Beta Pruning.
+     *
+     * Method influenced by other Alpha-Beta implementation, as seen at:
+     * https://www3.ntu.edu.sg/home/ehchua/programming/java/javagame_tictactoe_ai.html#:~:text=Reference%3A%20Wiki%20%22Alpha%2Dbeta,But%20node%20B%20is%204.
+     *
      * @param alphabeta - Array of alpha-beta values [alpha, beta]
      * @param val - The heuristic value of that world
      * @param playerID - The player responsible for the turn of that world
