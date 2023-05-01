@@ -31,19 +31,9 @@ public class OthelloGame {
 //            System.out.println("Viable check");
             if(brd.play(xPos, yPos, player))
             {
-                //System.out.println("Play Check");
-                if(player==1)
-                {
-                    player = 2;
-                }
-                else
-                {
-                    player=1;
-                }
+                playerPlayCheck();
 
-                playerPlayCheck(player);
-
-                if(!gameEndCheck())
+                if(brd.gameEndCheck())
                 {
                     scoreFinalGame();
                 }
@@ -94,10 +84,9 @@ public class OthelloGame {
 
     /**
      * Checks if the current player is able to make a move.
-     * @param player Current player
      * @return True if player is able to make a play, false otherwise
      */
-    void playerPlayCheck(int player)
+    void playerPlayCheck()
     {
         player = (player % 2) + 1;
 
@@ -107,33 +96,12 @@ public class OthelloGame {
             {
                 if(brd.viablePlay(i,j,player))
                 {
-                    player = (player % 2) + 1;
-                }
-            }
-        }
-    }
-
-    /**
-     * Checks if the game ends here
-     * @return False if the game ends, True otherwise
-     */
-    boolean gameEndCheck()
-    {
-
-        for(int i=0; i<brd.board.length; i++)
-        {
-            for(int j=0; j<brd.board.length; j++)
-            {
-                if(brd.board[j][i]==0)
-                {
-                    if(brd.viablePlay(i,j,player))
-                    {
-                        return true;
-                    }
+                    //player = (player % 2) + 1;
+                    return;
                 }
             }
         }
 
-        return false;
+        player = (player % 2) + 1;
     }
 }

@@ -181,7 +181,7 @@ public class OthelloBoard {
             {
                 if(board[j][i]==0)
                 {
-                    if(viablePlay(i,j, 1) && viablePlay(i,j, 2))
+                    if(viablePlay(i,j, 1) || viablePlay(i,j, 2))
                     {
                         return false;
                     }

@@ -6,7 +6,7 @@ public class Main {
         System.out.println("Hello World!");
 
         Player p1  = new Player(1, false, 1, 12);
-        Player p2  = new Player(2, false, 3,  6);
+        Player p2  = new Player(2, false, 1,  12);
         OthelloGame og = new OthelloGame();
 
         while(true){
