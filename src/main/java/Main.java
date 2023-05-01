@@ -6,7 +6,7 @@ public class Main {
     {
 
         //Specify the players based on the inputs that the user provided.
-        Player p1 = new Player(1, false, 3, 6);
+        Player p1 = new Player(1, false, 1, 12);
         Player p2 = new Player(2, false, 3, 6);
         OthelloGame og = new OthelloGame();
 
