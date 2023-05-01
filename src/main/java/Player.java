@@ -11,9 +11,8 @@ public class Player {
 
     private boolean isHuman;
 
-    //Depends on how we want to do this one
 
-    public Player(int playerID, boolean human ,int heuristicType, int searchDepth) {
+    public Player(int playerID, boolean human, int heuristicType, int searchDepth) {
         this.playerID = playerID;
         this.isHuman = human;
         this.heuristicType = heuristicType;
@@ -201,12 +200,10 @@ public class Player {
                 System.out.println("what's your move? in the form x,y");
                 System.out.print(": ");
                 String[] strSplit = scn.nextLine().split(",");
-                System.out.println("I");
                 if(!og.brd.viablePlay(Integer.parseInt(strSplit[0])-1, Integer.parseInt(strSplit[1])-1, playerID)){
-                    System.out.println("XEption");
+                    //System.out.println("XEption");
                     throw new Exception("Invalid play");
                 }
-                System.out.println("HI");
                 return new int[]{Integer.parseInt(strSplit[0])-1, Integer.parseInt(strSplit[1]) - 1};
             }
             catch(Exception e){
